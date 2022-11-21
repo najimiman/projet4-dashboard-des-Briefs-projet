@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <div id="ro"></div>
+    <script type="text/babel">
+        async function Getdata(){
+            try{
+            const mytache=await axios.get('http://127.0.0.1:8000/api/mytache');
+            console.log(mytache);
+            return mytache;
+            }
+            catch(error){
+                console.error(error);
+            }
+        }
+        async function Deletedata(id){
+            try{
+            const mytache=await axios.delete('http://127.0.0.1:8000/api/mytache/'+id);
+            console.log(mytache);
+            alert("suppreimer success");
+            window.location.reload(false); 
+            return mytache;
+            }
+            catch(error){
+                console.error(error);
+            }
+        }
+    class App extends React.Component{
+        
+        state={
+            arraytaches: [],
+            nameT: "",
+            dateD:"",
+            dateF:"",
+            description:""
+        }
+        componentDidMount=()=>{
+            Getdata().then(mytache=>{
+                this.setState({arraytaches:mytache.data});
+            }); 
+        }
+       
+        deletetache=(tacheA)=>{
+            //delete from server
+        Deletedata(tacheA.id).then(()=>{
+                 //delete from state
+        let aa=this.state.arraytaches;
+        const index=aa.indexOf(tacheA);
+        this.setState({arraytaches});
+        
+        aa.splice(index,1);
+        Getdata().then(mytache=>{
+                this.setState({arraytaches});
+            });
+        
+             })
+       
+        }
+                handlenom = (event) => {
+                    console.log( event.target.value);
+                    this.setState({nameT:event.target.value});
+                }
+                 handledated = (event) => {
+                    console.log(event.target.value);
+                    this.setState({dateD:event.target.value});
+                }
+                 handledatef = (event) => {
+                    console.log( event.target.value);
+                    this.setState({dateF:event.target.value});
+                }
+                 handledescript = (event) => {
+                    console.log(event.target.value);
+                    this.setState({description:event.target.value});
+                }
+
+                 handleSubmit =async (event) => {
+                    event.preventDefault();
+
+                    await axios.post("http://127.0.0.1:8000/api/mytache",this.state)
+                    .then(res => {
+                        console.log(res);
+                        console.log(res.data);
+                    }) .then((res)=> alert("add success"));
+                        window.location.reload(false); 
+                }
+        
+        render(){
+    return(
+        <div>
+           
+            <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Name tache:
+                        <input type="text" name="nameT" onChange={this.handlenom} />
+                    </label>
+                    <input type="datetime-local" name='dateD'  onChange={this.handledated}/>
+            <input type="datetime-local" name='dateF'  onChange={this.handledatef}/>
+            <input type="text" name='description'  onChange={this.handledescript}/>
+                    <button type="submit">Add</button>
+                    </form>
+            <table border="">
+                <thead>
+                    <th>nom tache</th>
+                    <th>dateD</th>
+                    <th>dateF</th>
+                    <th>Description</th>
+                </thead>
+                <tbody>
+                {this.state.arraytaches.map(tacheA=>
+            <tr>
+                <td>{tacheA.nameT}</td>
+                <td>{tacheA.dateD}</td>
+                <td>{tacheA.dateF}</td>
+                <td>{tacheA.description}</td>
+                <td><button onClick={()=>this.deletetache(tacheA)}>supprimer</button></td>
+                </tr>
+            )}
+        </tbody>
+                </table>    
+           
+        </div>
+        );
+    }
+    }
+    ReactDOM.render(<App/>,document.getElementById('root'));
+   
+    </script>
+</body>
+</html>
