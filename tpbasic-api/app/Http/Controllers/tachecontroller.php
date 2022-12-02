@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tache;
+use Illuminate\Console\View\Components\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class tachecontroller extends Controller
 {
@@ -14,8 +16,9 @@ class tachecontroller extends Controller
      */
     public function index()
     {
-        return Tache::all();
-       
+        // return Tache::all();
+        $Tache = Tache::select('*',DB::raw("TIMESTAMPDIFF(HOUR,dateD,dateF) AS Period"))->get();
+        return $Tache;
     }
 
     /**
