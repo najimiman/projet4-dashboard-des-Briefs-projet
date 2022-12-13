@@ -4,9 +4,14 @@ class Listtache extends React.Component{
     state={
         list:[],nametache:'',id:''
     }
-    componentDidMount=async()=>{
-        await axios.get('http://127.0.0.1:8000/api/Tache').then(res=>{this.setState({list:res.data});});
+    afficherdata=()=>{
+        axios.get('http://127.0.0.1:8000/api/Tache').then(res=>{this.setState({list:res.data});});
     }
+    componentDidMount=async()=>{
+        await this.afficherdata();
+        // axios.get('http://127.0.0.1:8000/api/Tache').then(res=>{this.setState({list:res.data});});
+    }
+
     handelnomtache=(e)=>{
         console.log(e.target.value);
         this.setState({nametache:e.target.value});
@@ -14,15 +19,17 @@ class Listtache extends React.Component{
     handelseve=(e)=>{
         e.preventDefault();
         axios.post('http://127.0.0.1:8000/api/Tache',this.state).then(res=>{
-            alert('bien ajouter');
-            window.location.reload(false);
+            // alert('bien ajouter');
+            // window.location.reload(false);
+            // axios.get('http://127.0.0.1:8000/api/Tache').then(res=>{this.setState({list:res.data});})
+            this.afficherdata();
+            this.state.nametache='';
         })
 
     }
     handeldeleet=(id)=>{
         axios.delete('http://127.0.0.1:8000/api/Tache/'+id).then(res=>{
-            alert('bien supprimer');
-            window.location.reload(false);
+            this.afficherdata();
         })
     }
     handeleedit=(id)=>{
@@ -34,8 +41,8 @@ class Listtache extends React.Component{
         e.preventDefault();
         let id=this.state.id;
         axios.put('http://127.0.0.1:8000/api/Tache/'+id,this.state).then(res=>{
-            alert('bien modifier');
-            window.location.reload(false);
+            this.afficherdata();
+            this.state.nametache='';
         })
     }
     render(){
