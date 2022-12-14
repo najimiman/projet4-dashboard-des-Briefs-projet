@@ -25,7 +25,7 @@ return new class extends Migration
             ->constrained('Preparation_brief')
             ->onDelete('cascade')
             ->onUpdate('cascade');
-        
+            $table->timestamps();
         });
 
     }

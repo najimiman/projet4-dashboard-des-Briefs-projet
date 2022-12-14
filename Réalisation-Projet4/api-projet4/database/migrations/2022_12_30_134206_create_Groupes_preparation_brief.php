@@ -24,7 +24,7 @@ return new class extends Migration
             ->constrained('Groupes')
             ->onDelete('cascade')
             ->onUpdate('cascade');
-
+            $table->timestamps();
         });
     }
 

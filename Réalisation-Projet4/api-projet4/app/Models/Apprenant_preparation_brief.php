@@ -11,7 +11,7 @@ class Apprenant_preparation_brief extends Model
     public $timestemps=false;
     protected $table = "apprenant_preparation_brief";
     protected $fillable = [
-        'Date_affectation'
+        'Date_affectation','Apprenant_id','Preparation_brief_id'
     ];
     public function apprenant(){
         return $this->belongsToMany(Apprenant::class);

@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('Etat')->default('en pouse');
             $table->timestamp("date_debut")->nullable();
             $table->timestamp("date_fin")->nullable();
+            $table->timestamps();
         });
     }
 

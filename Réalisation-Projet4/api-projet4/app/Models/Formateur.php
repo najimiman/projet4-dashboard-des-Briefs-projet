@@ -21,6 +21,9 @@ class Formateur extends Model
     ];
 
     public function groupes(){
-        return $this->hasMany(Groupes::class);
+        return $this->hasOne(Groupes::class);
+       }
+       public function preparationbrief(){
+        return $this->hasMany(Preparation_brief::class);
        }
 }
