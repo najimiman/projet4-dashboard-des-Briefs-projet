@@ -7,13 +7,15 @@ class App extends React.Component{
         list:[],id:'',
         nameT:'',dateD:'',dateF:'',description:''
     }
-
-    componentDidMount=()=>{
+    affiche=()=>{
         axios.get('http://127.0.0.1:8000/api/mytache').then(res=>{
             //console.log(res.data);
             this.setState({list:res.data});
             
         });
+    }
+    componentDidMount=()=>{
+        this.affiche();
     }
    
     handleSubmit =async (event) => {
@@ -23,8 +25,12 @@ class App extends React.Component{
                     .then(res => {
                         console.log(res);
                         console.log(res.data);
-                    }) .then((res)=> alert("add success"));
-                        window.location.reload(false); 
+                        this.affiche();
+                        this.state.nameT='';
+                        this.state.dateD='';
+                        this.state.dateF='';
+                        this.state.description='';
+                    })
                 }
     handelnamet=(e)=>{
         console.log(e.target.value);
@@ -44,9 +50,7 @@ class App extends React.Component{
     }
     
     handledelete=(id)=>{
-        axios.delete('http://127.0.0.1:8000/api/mytache/'+id).then(res=>{alert("delete success");
-        window.location.reload(false); 
-        
+        axios.delete('http://127.0.0.1:8000/api/mytache/'+id).then(res=>{this.affiche();
     });
     }
     
@@ -66,8 +70,12 @@ class App extends React.Component{
         await axios.put("http://127.0.0.1:8000/api/mytache/"+id,this.state).then(res =>{
             console.log(res);
             console.log(res.data);
-        }).then((res)=> alert("update success"));
-            window.location.reload(false); 
+            this.affiche();
+            this.state.nameT='';
+            this.state.dateD='';
+            this.state.dateF='';
+            this.state.description='';
+        })
     }
     render(){
         

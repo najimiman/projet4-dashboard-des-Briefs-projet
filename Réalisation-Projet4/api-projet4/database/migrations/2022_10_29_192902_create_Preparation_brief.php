@@ -23,7 +23,7 @@ return new class extends Migration
                 ->constrained('Formateur')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-
+                $table->timestamps();
         });
     }
 

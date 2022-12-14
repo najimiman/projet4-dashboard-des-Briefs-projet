@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,5 +22,10 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        // $this->call([FormateurSeeder::class]);
+        \App\Models\Formateur::factory(5)->create();
+        \App\Models\Annee_formation::factory(5)->create();
+        \App\Models\Groupes::factory(5)->create();
+        \App\Models\Apprenant::factory(5)->create();
     }
 }
