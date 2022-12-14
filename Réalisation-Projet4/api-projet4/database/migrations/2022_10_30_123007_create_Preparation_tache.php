@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string("Nom_tache")->nullable();
             $table->string("Description")->nullable();
-            $table->decimal("Duree")->nullable();
+            $table->string("Duree")->nullable();
 
             
             $table->foreignId("Preparation_brief_id")
             ->constrained('Preparation_brief')
             ->onDelete('cascade')
             ->onUpdate('cascade');
+            $table->timestamps();
 
             
         });

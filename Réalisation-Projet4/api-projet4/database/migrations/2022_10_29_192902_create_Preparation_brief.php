@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("Nom_du_brief")->nullable();
             $table->string("Description")->nullable();
-            $table->decimal("Duree")->nullable();
+            $table->string("Duree")->nullable();
 
             $table->foreignId("Formateur_id")
                 ->constrained('Formateur')

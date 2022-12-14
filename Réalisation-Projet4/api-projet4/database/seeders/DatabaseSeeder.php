@@ -27,5 +27,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Annee_formation::factory(5)->create();
         \App\Models\Groupes::factory(5)->create();
         \App\Models\Apprenant::factory(5)->create();
+        \App\Models\Preparation_brief::factory(5)->create();
+        \App\Models\Preparation_tache::factory(5)->create();
     }
 }

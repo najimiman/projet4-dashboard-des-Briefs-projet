@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("Nom")->nullable();
             $table->string("Prenom")->nullable();
             $table->string("Email")->nullable();
-            $table->decimal("Phone")->nullable();
+            $table->string("Phone")->nullable();
             $table->string("Adress")->nullable();
             $table->string("CIN")->nullable();
             $table->date("Date_naissance")->nullable();
