@@ -53,7 +53,12 @@ class Todolist extends React.Component{
                 handelDD={this.handelDD}
                 handelDF={this.handelDF}
                 handelD={this.handelD}
-                handelsubmit={this.handelsubmit}/>
+                handelsubmit={this.handelsubmit}
+                nameTe={this.state.nameT}
+                     dateDe={this.state.nameT}
+                     dateFe={this.state.nameT}
+                     descriptione={this.state.description}/>
+                     
                 {this.state.list.map((value)=>(
                      <Getdata
                      nameT={value.nameT}
