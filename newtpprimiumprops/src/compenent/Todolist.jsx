@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Getdata from "./getdata";
+import Task from "./Task";
 import Add from "./add";
 class Todolist extends React.Component{
     constructor(props){
@@ -9,12 +9,14 @@ class Todolist extends React.Component{
             list:[],nameT:'',dateD:'',dateF:'',description:'',id:''
         }
     }
+
     affiche=()=>{
         axios.get('http://127.0.0.1:8000/api/mytache').then(res=>{this.setState({list:res.data});});
     }
     componentDidMount=()=>{
         this.affiche();
     }
+
     handelN=(e)=>{
         this.setState({nameT:e.target.value});
         console.log(e.target.value);
@@ -46,6 +48,28 @@ class Todolist extends React.Component{
             this.affiche();
         })
     }
+
+    handeledit=(id)=>{
+        axios.get('http://127.0.0.1:8000/api/mytache/'+id+'/edit').then(res=>{
+            this.setState({
+                id:res.data.id,
+                nameT:res.data.nameT,
+                dateD:res.data.dateD,
+                dateF:res.data.dateF,
+                description:res.data.description
+            })
+        })
+    }
+    handelupdate=async(e)=>{
+        e.preventDefault();
+        let id=this.state.id;
+      await  axios.put('http://127.0.0.1:8000/api/mytache/'+id,this.state).then(res=>{this.affiche();
+      this.state.nameT='';
+      this.state.dateD='';
+      this.state.dateF='';
+      this.state.description='';
+    })
+    }
     render(){
         return(
             <div>
@@ -54,19 +78,22 @@ class Todolist extends React.Component{
                 handelDF={this.handelDF}
                 handelD={this.handelD}
                 handelsubmit={this.handelsubmit}
+                handelupdate={this.handelupdate}
+                id={this.state.id}
                 nameTe={this.state.nameT}
-                     dateDe={this.state.nameT}
-                     dateFe={this.state.nameT}
-                     descriptione={this.state.description}/>
-                     
-                {this.state.list.map((value)=>(
-                     <Getdata
+                dateDe={this.state.dateD}
+                dateFe={this.state.dateF}
+                descriptione={this.state.description}/>
+
+                    {this.state.list.map((value)=>(
+                     <Task
+                     key={value.id}
                      nameT={value.nameT}
                      dateD={value.dateD}
                      dateF={value.dateF}
                      description={value.description}
-                     id={value.id}
                      handeldelete={()=>this.handeldelete(value.id)}
+                     handeledit={()=>this.handeledit(value.id)}
                      />
                 ))}
             </div>

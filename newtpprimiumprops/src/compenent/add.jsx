@@ -9,6 +9,7 @@ class Add extends React.Component{
                 <input type="datetime-local" name="dateF" value={this.props.dateFe} onChange={this.props.handelDF}/>
                 <input type="text" name="description" value={this.props.descriptione} onChange={this.props.handelD}/>
                 <button onClick={this.props.handelsubmit}>Ajouter</button>
+                <button onClick={this.props.handelupdate}>Modifier</button>
             </div>
         );
     }
