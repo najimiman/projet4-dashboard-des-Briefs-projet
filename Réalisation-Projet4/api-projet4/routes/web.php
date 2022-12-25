@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\annee_formationController;
+use App\Http\Controllers\Formateurcontroller;
 use Illuminate\Support\Facades\Route;
 
 /*

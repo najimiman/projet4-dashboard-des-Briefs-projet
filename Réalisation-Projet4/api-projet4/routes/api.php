@@ -23,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('Anneformation',annee_formationController::class);
 Route::get('/loginformateur/{email}/{cin}',[Formateurcontroller::class,'myshow']);
+Route::get('/mymethode/{formateur}/{annescolaire}',[annee_formationController::class,'methodeanne']);
+Route::get('/mymethodecounte/{idgroup}',[annee_formationController::class,'methodecountnbapprene']);
