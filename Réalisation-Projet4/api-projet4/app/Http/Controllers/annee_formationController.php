@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Annee_formation;
 use App\Models\Formateur;
+use App\Models\Groupes;
+use App\Models\Groupes_apprenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -36,7 +38,7 @@ class annee_formationController extends Controller
             
             // ->orderBy('exo.id', 'asc')
             // ->limit(0,1)
-            ->get();
+            ->first();
         return $result;
     }
     //methode count nb apprenent en group
@@ -52,6 +54,9 @@ class annee_formationController extends Controller
             ->get();
         return $result;
     }
+
+
+
     /**
      * Show the form for creating a new resource.
      *
