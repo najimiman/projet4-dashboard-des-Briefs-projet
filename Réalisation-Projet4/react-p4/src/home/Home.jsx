@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 class Home extends React.Component {
     state = {
-        list: [],Annee_scolaire:'',id:'',Nom_groupe:''
+        list: [],Annee_scolaire:'',id:'',Nom_groupe:'',nb:''
     }
    
     Afficher = () => {
@@ -14,6 +14,7 @@ class Home extends React.Component {
     }
     componentDidMount = async () => {
         await this.Afficher();
+        await this.handelafficher();
     }
     handelselect=async(e)=>{
         this.setState({Annee_scolaire:e.target.value});
@@ -24,9 +25,15 @@ class Home extends React.Component {
         Nom_groupe:res.data.Nom_groupe,id:res.data.id});
         console.log(res.data.id);
         console.log(res.data.Nom_groupe);
+        axios.get('http://127.0.0.1:8000/api/mymethodecounte/'+res.data.id).then((res)=>{console.log(res.data);
+        this.setState({nb:res.data.nb});
+        console.log(res.data.nb);
+    })
         })
+       
         
     }
+   
     render() {
         return (
             <div>
@@ -38,6 +45,7 @@ class Home extends React.Component {
                 ))}
                 </select>
                         <label htmlFor="" name="Nom_groupe"> {this.state.Nom_groupe}</label>
+                        <label htmlFor="" name="nb"> {this.state.nb}</label>
             </div>
         );
     }
