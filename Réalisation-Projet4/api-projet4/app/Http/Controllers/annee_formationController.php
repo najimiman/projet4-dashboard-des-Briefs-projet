@@ -51,7 +51,7 @@ class annee_formationController extends Controller
             ->join('Groupes', 'Groupes_apprenant.Groupe_id', '=', 'Groupes.id')
             ->where('Groupes_apprenant.Groupe_id', $idgroup)
             ->groupBy('Groupes.Nom_groupe')
-            ->get();
+            ->first();
         return $result;
     }
 
