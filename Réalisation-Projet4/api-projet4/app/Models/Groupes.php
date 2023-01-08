@@ -8,17 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Groupes extends Model
 {
     use HasFactory;
-    public $timestemps=false;
+
     protected $table = "groupes";
+    public $timestamps= false;
     protected $fillable = [
-        'Nom_groupe',
+
+        "Nom_groupe",
+        "Annee_formation_id",
+        "Formateur_id",
         "Logo"
+
     ];
 
-    public function formateur(){
+    public function teacher(){
         return $this->hasOne(Formateur::class);
-       }
-    public function annee_formation(){
-        return $this->belongsTo(Annee_formation::class);
-       }
+    }
+    public function students(){
+        return $this->belongsToMany(Apprenant::class, 'groupes_apprenant','Groupe_id');
+    }
+    public function formation(){
+        return $this->belongsTo(AnneFormation::class);
+    }
 }
