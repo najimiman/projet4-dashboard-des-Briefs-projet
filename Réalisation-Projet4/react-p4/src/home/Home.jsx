@@ -14,13 +14,13 @@ class Home extends React.Component {
     }
     componentDidMount = async () => {
         await this.Afficher();
-        await this.handelafficher();
+        // await this.handelafficher();
     }
     handelselect=async(e)=>{
         this.setState({Annee_scolaire:e.target.value});
         console.log(e.target.value);
         let Annee_scolaire=e.target.value;
-       await axios.get('http://127.0.0.1:8000/api/mymethode/5/'+Annee_scolaire).then((res)=>{console.log(res.data);
+       await axios.get('http://127.0.0.1:8000/api/mymethode/1/'+Annee_scolaire).then((res)=>{console.log(res.data);
        this.setState({
         Nom_groupe:res.data.Nom_groupe,id:res.data.id});
         console.log(res.data.id);
