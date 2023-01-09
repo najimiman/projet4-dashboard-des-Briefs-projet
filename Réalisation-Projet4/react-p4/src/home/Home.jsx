@@ -46,6 +46,7 @@ class Home extends React.Component {
                 </select>
                         <label htmlFor="" name="Nom_groupe"> {this.state.Nom_groupe}</label>
                         <label htmlFor="" name="nb"> {this.state.nb}</label>
+                        <label htmlFor="" name="nb"> {this.state.Annee_scolaire}</label>
             </div>
         );
     }
