@@ -13,17 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Preparation_brief', function (Blueprint $table) {
-            $table->id();
+        Schema::create('preparation_brief', function (Blueprint $table) {
+            $table->increments('id');
             $table->string("Nom_du_brief")->nullable();
             $table->string("Description")->nullable();
-            $table->string("Duree")->nullable();
+            $table->integer("Duree")->nullable();
 
-            $table->foreignId("Formateur_id")
-                ->constrained('Formateur')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-                $table->timestamps();
+            $table->unsignedInteger("Formateur_id")->nullable();
+            $table->foreign("Formateur_id")
+            ->references("id")
+            ->on('formateur')
+            ->onDelete('cascade');
         });
     }
 
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('briefs');
+        Schema::dropIfExists('preparation_brief');
     }
 };

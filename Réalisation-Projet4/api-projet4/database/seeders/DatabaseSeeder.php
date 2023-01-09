@@ -1,37 +1,49 @@
 <?php
 
 namespace Database\Seeders;
-
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-
 use Illuminate\Database\Seeder;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+
+use App\Models\AnneFormation;
+use App\Models\Apprenant;
+use App\Models\Brief;
+use App\Models\Formateur;
+use App\Models\Groupes;
+use App\Models\GroupesApprenant;
+use App\Models\GroupesPreparationBrief;
+use App\Models\PreparationBrief;
+use App\Models\PreparationTache;
+use App\Models\Tache;
+use Database\Factories\AnneFormationFactory;
+use Database\Factories\ApprenantFactory;
+use Database\Factories\BriefFactory;
+use Database\Factories\TacheFactory;
+use Database\Factories\FormateurFactory;
+use Database\Factories\GroupesFactory;
+use Database\Factories\GroupesApprenantFactory;
+use Database\Factories\GroupesPreparationBriefFactory;
+use Database\Factories\PreparationBriefFactory;
+use Database\Factories\PreparationTacheFactory;
+
+                         
+
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        // \App\Models\User::factory(10)->create();
+  public function run (){
+  
+    Formateur::factory(2)->create();
+    AnneFormation::factory(2)->create();
+    Groupes::factory(2)->create();
+    Apprenant::factory(5)->create();
+    GroupesApprenant::factory(2)->create();
+    PreparationBrief::factory(4)->create();
+    PreparationTache::factory(6)->create();
+    Brief::factory(4)->create();
+    Tache::factory(6)->create();
+    GroupesPreparationBrief::factory(6)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-        // $this->call([FormateurSeeder::class]);
-        \App\Models\Formateur::factory(5)->create();
-        \App\Models\Annee_formation::factory(5)->create();
-        \App\Models\Groupes::factory(5)->create();
-        \App\Models\Apprenant::factory(5)->create();
-        \App\Models\Preparation_brief::factory(5)->create();
-        \App\Models\Preparation_tache::factory(5)->create();
-        \App\Models\Apprenant_preparation_brief::factory(5)->create();
-        \App\Models\Groupes_preparation_brief::factory(5)->create();
-        \App\Models\Apprenant_preparation_tache::factory(5)->create();
-        \App\Models\Groupes_apprenant::factory(5)->create();
-    }
+  }
 }

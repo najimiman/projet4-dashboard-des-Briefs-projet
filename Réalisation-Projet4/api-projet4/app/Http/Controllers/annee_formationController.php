@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Annee_formation;
+use App\Models\AnneFormation;
 use App\Models\Formateur;
 use App\Models\Groupes;
 use App\Models\Groupes_apprenant;
@@ -19,22 +20,22 @@ class annee_formationController extends Controller
      */
     public function index()
     {
-        return Annee_formation::all();
+        return AnneFormation::all();
     }
     //methode id formateur and select year
     public function methodeanne($formateur, $annescolaire)
     {
-        $result = DB::table('Groupes')
+        $result = DB::table('groupes')
             ->selectRaw(
-                'Groupes.id,Groupes.Nom_groupe,
-                Formateur.id as id_formateur,
-                Formateur.Nom_formateur,
-                Annee_formation.Annee_scolaire',
+                'groupes.id,groupes.Nom_groupe,
+                formateur.id as id_formateur,
+                formateur.Nom_formateur,
+                anne_formation.Annee_scolaire',
             )
-            ->join('Annee_formation', 'Groupes.Annee_formation_id', '=', 'Annee_formation.id')
-            ->join('Formateur', 'Groupes.Formateur_id', '=', 'Formateur.id')
-            ->where('Formateur.id', $formateur)
-            ->where('Annee_formation.Annee_scolaire', $annescolaire)
+            ->join('anne_formation', 'groupes.Annee_formation_id', '=', 'anne_formation.id')
+            ->join('formateur', 'groupes.Formateur_id', '=', 'formateur.id')
+            ->where('formateur.id', $formateur)
+            ->where('anne_formation.Annee_scolaire', $annescolaire)
             
             // ->orderBy('exo.id', 'asc')
             // ->limit(0,1)
@@ -44,13 +45,13 @@ class annee_formationController extends Controller
     //methode count nb apprenent en group
     public function methodecountnbapprene($idgroup)
     {
-        $result = DB::table('Groupes_apprenant')
+        $result = DB::table('groupes_apprenant')
             ->selectRaw(
-                'Groupes.Nom_groupe,COUNT(Groupes_apprenant.Apprenant_id) as nb'
+                'groupes.Nom_groupe,COUNT(groupes_apprenant.Apprenant_id) as nb'
             )
-            ->join('Groupes', 'Groupes_apprenant.Groupe_id', '=', 'Groupes.id')
-            ->where('Groupes_apprenant.Groupe_id', $idgroup)
-            ->groupBy('Groupes.Nom_groupe')
+            ->join('groupes', 'groupes_apprenant.Groupe_id', '=', 'groupes.id')
+            ->where('groupes_apprenant.Groupe_id', $idgroup)
+            ->groupBy('groupes.Nom_groupe')
             ->first();
         return $result;
     }

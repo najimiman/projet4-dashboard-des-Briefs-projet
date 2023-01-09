@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Formateur extends Model
 {
     use HasFactory;
-    public $timestemps=false;
+    use HasFactory;
     protected $table = "formateur";
+    public $timestamps= false;
     protected $fillable = [
-        'Nom_formateur',
+
+        "Nom_formateur",
         "Prenom_formateur",
         "Email_formateur",
         "Phone",
@@ -19,11 +21,12 @@ class Formateur extends Model
         "CIN",
         "Image"
     ];
+    public function groups(){
+        return $this->hasMany(Groupes::class);
+    }
 
-    public function groupes(){
-        return $this->hasOne(Groupes::class);
-       }
-       public function preparationbrief(){
-        return $this->hasMany(Preparation_brief::class);
-       }
+    public function teacher_preparation_brief(){
+        return $this->hasMany(PreparationBrief::class);
+    }
 }
+

@@ -13,18 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Groupes_preparation_brief', function (Blueprint $table) {
-            $table->id();
+        Schema::create('groupes_preparation_brief', function (Blueprint $table) {
+            $table->increments('id');
+            
             $table->foreignId("Apprenant_preparation_brief_id")
-            ->constrained('Apprenant_preparation_brief')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+            ->constrained('brief')
+            ->onDelete('cascade');
 
-            $table->foreignId("Groupe_id")
-            ->constrained('Groupes')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
-            $table->timestamps();
+            $table->unsignedInteger("Groupe_id")->nullable();
+            $table->foreign("Groupe_id")
+            ->references("id")
+            ->on('groupes')
+            ->onDelete('cascade');
         });
     }
 
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('groupes_preparation_brief');
     }
 };
