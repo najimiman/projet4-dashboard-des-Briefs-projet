@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\annee_formationController;
+use App\Http\Controllers\Dashbordcontroller;
 use App\Http\Controllers\Formateurcontroller;
 use App\Models\Annee_formation;
 use Illuminate\Http\Request;
@@ -23,5 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('Anneformation',annee_formationController::class);
 Route::get('/loginformateur/{email}/{cin}',[Formateurcontroller::class,'myshow']);
-Route::get('/mymethode/{formateur}/{annescolaire}',[annee_formationController::class,'methodeanne']);
-Route::get('/mymethodecounte/{idgroup}',[annee_formationController::class,'methodecountnbapprene']);
+Route::get('/mymethode/{formateur}/{annescolaire}',[Dashbordcontroller::class,'methodeanne']);
+Route::get('/mymethodecounte/{idgroup}',[Dashbordcontroller::class,'methodecountnbapprene']);
+
+Route::get('/formation/{id}',[Dashbordcontroller::class,'formation'])->name('formation');

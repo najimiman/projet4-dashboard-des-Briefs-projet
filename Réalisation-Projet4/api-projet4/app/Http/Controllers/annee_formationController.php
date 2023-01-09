@@ -22,41 +22,7 @@ class annee_formationController extends Controller
     {
         return AnneFormation::all();
     }
-    //methode id formateur and select year
-    public function methodeanne($formateur, $annescolaire)
-    {
-        $result = DB::table('groupes')
-            ->selectRaw(
-                'groupes.id,groupes.Nom_groupe,
-                formateur.id as id_formateur,
-                formateur.Nom_formateur,
-                anne_formation.Annee_scolaire',
-            )
-            ->join('anne_formation', 'groupes.Annee_formation_id', '=', 'anne_formation.id')
-            ->join('formateur', 'groupes.Formateur_id', '=', 'formateur.id')
-            ->where('formateur.id', $formateur)
-            ->where('anne_formation.Annee_scolaire', $annescolaire)
-            
-            // ->orderBy('exo.id', 'asc')
-            // ->limit(0,1)
-            ->first();
-        return $result;
-    }
-    //methode count nb apprenent en group
-    public function methodecountnbapprene($idgroup)
-    {
-        $result = DB::table('groupes_apprenant')
-            ->selectRaw(
-                'groupes.Nom_groupe,COUNT(groupes_apprenant.Apprenant_id) as nb'
-            )
-            ->join('groupes', 'groupes_apprenant.Groupe_id', '=', 'groupes.id')
-            ->where('groupes_apprenant.Groupe_id', $idgroup)
-            ->groupBy('groupes.Nom_groupe')
-            ->first();
-        return $result;
-    }
-
-
+    
 
     /**
      * Show the form for creating a new resource.
