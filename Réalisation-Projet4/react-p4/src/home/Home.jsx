@@ -1,10 +1,14 @@
 import React from "react";
 import axios from "axios";
+import  Avencement_group  from './AvencementGroup';
 class Home extends React.Component {
-    state = {
-        list: [],Annee_scolaire:'',id:'',Nom_groupe:'',nb:''
-    }
-   
+    constructor(props) {
+        super(props);
+        this.state = {
+            list: [],Annee_scolaire:'',id:'',Nom_groupe:'',nb:'',
+            group_av : ''
+        };
+  }
     Afficher = () => {
         
         axios.get('http://127.0.0.1:8000/api/Anneformation').then(res => { this.setState({ list: res.data }); 
@@ -46,7 +50,8 @@ class Home extends React.Component {
                 </select>
                         <label htmlFor="" name="Nom_groupe"> {this.state.Nom_groupe}</label>
                         <label htmlFor="" name="nb"> {this.state.nb}</label>
-                        <label htmlFor="" name="nb"> {this.state.Annee_scolaire}</label>
+                        <label htmlFor="" name="Annee_scolaire"> {this.state.Annee_scolaire}</label>
+                        <Avencement_group data={this.state.group_av}/>
             </div>
         );
     }
