@@ -1,38 +1,35 @@
-.App {
+.container{
+  margin-top: 6em;
+}
+h1{
+  color: blue;
+  font-weight: 300;
+}
+.selectY{
+  text-align: end;
+}
+select{
+  border-color: blue;
+  padding: 7px 28px;
+  margin-top: 0.7em;
+}
+img{
+  border: 1px solid blue;
+  border-radius: 50px;
+  padding: 18px 6px;
+}
+span{
+  margin-left: 1em;
+}
+.info, .info1{
+  margin-top: 1em;
+}
+.etatAv{
+  margin-top: 2em;
+}
+.studentAv{
+  border: 1px solid blue;
+}
+.etatAvSt{
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
