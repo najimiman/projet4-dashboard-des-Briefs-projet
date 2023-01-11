@@ -55,7 +55,11 @@ class Dashbordcontroller extends Controller
             ->first();
         return $result;
     }
-
+    public function years()
+    {
+        $years = AnneFormation::all();
+        return $years;
+    }
 public function formation(Request $reaquest,$id){
         $year = AnneFormation::findOrFail($id);
         $group = Groupes::where('Annee_formation_id', $year->id)->first();

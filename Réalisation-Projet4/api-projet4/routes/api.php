@@ -27,4 +27,10 @@ Route::get('/loginformateur/{email}/{cin}',[Formateurcontroller::class,'myshow']
 Route::get('/mymethode/{formateur}/{annescolaire}',[Dashbordcontroller::class,'methodeanne']);
 Route::get('/mymethodecounte/{idgroup}',[Dashbordcontroller::class,'methodecountnbapprene']);
 
-Route::get('/formation/{id}',[Dashbordcontroller::class,'formation'])->name('formation');
+// Route::get('/formation/{id}',[Dashbordcontroller::class,'formation'])->name('formation');
+Route::controller(Dashbordcontroller::class)->group(function(){
+    Route::get('/group/{id}', 'formation');
+    Route::get('/group', 'years');
+    Route::get('/studentAv', 'studentAv');
+    // Route::get('/lastY', 'lastYear');
+});
