@@ -1,67 +1,97 @@
 import React from "react";
 import axios from "axios";
-// import  {Avencement_group} from './AvencementGroup';
+import AvencementGroup from "./AvencementGroup";
+import BriefAv from "./BriefAv";
+import StudentAv from "./StudentAv";
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: [],Annee_scolaire:'',id:'',Nom_groupe:'',nb:'',
-            group_av : ''
+        years : [],
+        group : '',
+        studentCount : '',
+        valueSelect: '',
+        brief_affs : [],
+        briefs_av : [],
+        group_av : '',
+        name:''
         };
   }
-    Afficher = () => {
-        
-        axios.get('http://127.0.0.1:8000/api/Anneformation').then(res => { this.setState({ list: res.data }); 
-    console.log(res.data);
-    });
-        
-    }
-    componentDidMount = async () => {
-        await this.Afficher();
-        // await this.handelafficher();
-    }
-    handelselect=async(e)=>{
-        this.setState({Annee_scolaire:e.target.value});
-        console.log(e.target.value);
-        let Annee_scolaire=e.target.value;
-       await axios.get('http://127.0.0.1:8000/api/mymethode/1/'+Annee_scolaire).then((res)=>{console.log(res.data);
-       this.setState({
-        Nom_groupe:res.data.Nom_groupe,id:res.data.id});
-        console.log(res.data.id);
-        console.log(res.data.Nom_groupe);
-        axios.get('http://localhost:8000/api/group/'+Annee_scolaire).then((res) => {
-        this.setState({
-        //   group: res.data.group,
-        //   studentCount: res.data.studentCount,
-        //   brief_affs : res.data.brief_aff[0],
-        //   briefs_av : res.data.briefs,
-          group_av : res.data.group_av
-        });
+  getDatayears = () => {
+    axios.get("http://localhost:8000/api/group").then((res) => {
+      this.setState({
+        years : res.data
       });
-    //     axios.get('http://127.0.0.1:8000/api/mymethodecounte/'+res.data.id).then((res)=>{console.log(res.data);
-    //     this.setState({nb:res.data.nb});
-    //     console.log(res.data.nb);
-    // })
-        })
-       
-    
-    }
+    });
+  };
+
+//   lastYear = () => {
+//     axios.get("http://localhost:8000/api/lastY").then((res) => {
+//       this.setState({
+//         lastY : res.data.year
+//       });
+//     });
+//   };
+
+   getData = (e) => {
+    axios.get('http://localhost:8000/api/group/'+e.target.value).then((res) => {
+      this.setState({
+        group: res.data.group,
+        name:res.data.group.Nom_groupe,
+        studentCount: res.data.studentCount,
+        brief_affs : res.data.brief_aff[0],
+        briefs_av : res.data.briefs,
+        group_av : res.data.group_av,
+      });
+    });
+  };
+
+  componentDidMount() {
+    this.getDatayears()
+    // this.lastYear()
+  }
    
     render() {
         return (
             <div>
-                hello home
-                <select value={this.state.Annee_scolaire} id='myselect' onChange={this.handelselect}>
-                    <option value="">choix</option>
-                {this.state.list.map((value)=>(
-                    <option value={value.id} key={value.id}>{value.Annee_scolaire}</option>
-                ))}
-                </select>
-                        <label htmlFor="" name="Nom_groupe"> {this.state.Nom_groupe}</label>
-                        <label htmlFor="" name="nb"> {this.state.nb}</label>
-                        <label htmlFor="" name="Annee_scolaire"> {this.state.Annee_scolaire}</label>
-                        {/* <Avencement_group data={this.state.group_av}/> */}
+            hello Home
+            <div>
+        <div className="row">
+          <div className="col-md-8">
+            <h1>tableau de borde d'état d'avancement</h1>
+          </div>
+          <div className="col-md-4 selectY">
+            <select onChange={this.getData} id="input">
+              <option value="">Année</option>
+              {this.state.years.map((item)=>(
+                <option value={item.id} key={item.id}>{item.Annee_scolaire}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="row info">
+            <div className="col-md-4">
+              <img src="" alt="logo"></img>
+              <span>{this.state.name}</span>
             </div>
+            <div className="col-md-4 info">
+              <p>{this.state.studentCount} apprenants</p>
+            </div>
+            <div className="col-md-4"></div>
+          </div>
+        </div>
+
+        <div className="row etatAv">
+            <div className="col-md-6">
+                <AvencementGroup data={this.state.group_av}/>
+                <BriefAv data={this.state.briefs_av} />
+            </div>
+            <div className="col-md-6 etatAvSt">
+                {/* <StudentAv data={this.state.brief_affs}/> */}
+            </div>
+        </div>
+      </div>
+        </div>
         );
     }
 }
