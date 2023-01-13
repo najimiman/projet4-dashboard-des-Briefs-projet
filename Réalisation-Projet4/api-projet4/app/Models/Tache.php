@@ -14,6 +14,7 @@ class Tache extends Model
     "Preparation_tache_id",
     "Apprenant_id",
     "Apprenant_P_Brief_id",
+    "preparation_brief_id",
     "Etat",
     "date_debut",
     "date_fin"

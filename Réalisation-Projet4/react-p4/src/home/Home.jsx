@@ -35,11 +35,12 @@ class Home extends React.Component {
 
    getData = (e) => {
     axios.get('http://localhost:8000/api/group/'+e.target.value).then((res) => {
+      console.log(res.data);
       this.setState({
         group: res.data.group,
         name:res.data.group.Nom_groupe,
         studentCount: res.data.studentCount,
-        brief_affs : res.data.brief_aff[0],
+        brief_affs : res.data.brief_aff,
         briefs_av : res.data.briefs,
         group_av : res.data.group_av,
       });
@@ -87,7 +88,7 @@ class Home extends React.Component {
                 <BriefAv data={this.state.briefs_av} />
             </div>
             <div className="col-md-6 etatAvSt">
-                {/* <StudentAv data={this.state.brief_affs}/> */}
+                <StudentAv data={this.state.brief_affs}/>
             </div>
         </div>
       </div>

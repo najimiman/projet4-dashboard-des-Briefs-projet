@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Apprenant;
 use App\Models\Brief;
+use App\Models\PreparationBrief;
 use App\Models\PreparationTache;
 use App\Models\Tache;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,14 +20,17 @@ class TacheFactory extends Factory
         $preparationTache =PreparationTache::all()->pluck('id')->toArray();
         $ApprenantPreparationBrief =Brief::all()->pluck('id')->toArray();
         $apprenant =Apprenant::all()->pluck('id')->toArray();
+        $preparationbrief =PreparationBrief::all()->pluck('id')->toArray();
 
         return [
             "Preparation_tache_id"=>$this->faker->randomElement($preparationTache),
             "Apprenant_id"=>$this->faker->randomElement($apprenant),
             "Apprenant_P_Brief_id"=>$this->faker->randomElement($ApprenantPreparationBrief),
             "Etat"=>$this->faker->randomElement(['en pause', 'terminer', 'en cours']) ,
+            "preparation_brief_id"=>$this->faker->randomElement($preparationbrief),
             "date_debut"=>$this->faker->date(),
             "date_fin"=>$this->faker->date(),
+
         ];
     }
 }
