@@ -41,7 +41,7 @@
 
                     <div class="search-box">
                         <i class="material-icons">&#xE8B6;</i>
-                        <input type="text" class="form-control" id="search" value="{{old('search')}}" placeholder="Search&hellip;">
+                        <input type="text" class="form-control" name="serach" id="serach" placeholder="Search&hellip;">
                     </div>
 
                 </div>
@@ -55,34 +55,14 @@
               <th>{{__('message.prenom')}}</th>
           </tr>
       </thead>
-      <tbody  class="table1" id="table1">
-        @foreach ($apprenant as $value )
-        <tr>
-            <td><img src="{{asset('./imageapprent/'.$value->Image)}}" alt="" width="80" height="80"></td>
-            <td>{{ $value->Nom }}</td>
-            <td>{{ $value->Prenom }}</td>
-            <td>
-                <a  href="{{ route('apprenant.edit', $value->id)}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                <form action="{{ route('apprenant.destroy', $value->id)}}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button id="trash-icon">
-                        <a  class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                    </button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-
+      <tbody>
+        @include('apprenants.apprenant_data')
     </tbody>
   </table>
-
+  <input type="text" name="hidden_page" id="hidden_page" value="1" />
 
 
   <div class="d-flex justify-content-between">
-      <div class="d-flex justify-content-start">
-        {!! $apprenant->links() !!}
-      </div>
       <div>
             <a href="{{route('generatepdfapprenant')}}" class="btn btn-outline-secondary" >{{__('message.export_pdf')}}</a>
             <a href="/exportexcelapprenant" class="btn btn-outline-secondary" >{{__('message.export_excel')}}</a>
@@ -120,7 +100,7 @@
 </div>
 </div>
 </div>
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $('#filter').on('change',function(){
         $value=$(this).val();
         $.ajax({
@@ -191,5 +171,81 @@
             }
         });
     })
-</script>     
+</script>      --}}
+<script>
+$(document).ready(function(){
+function fetch_data(page,query)
+{
+$.ajax({
+ url:"/pagination/fetch_data?page="+page+"&query="+query,
+ success:function(data)
+ {
+  // console.log(data);
+  $('tbody').html('');
+  $('tbody').html(data);
+ }
+})
+}
+
+$(document).on('keyup', '#serach', function(){
+var query = $('#serach').val();
+var page = $('#hidden_page').val();
+fetch_data(page,query);
+});
+
+
+$(document).on('click', '.pagination a', function(event){
+event.preventDefault();
+var page = $(this).attr('href').split('page=')[1];
+$('#hidden_page').val(page);
+var query = $('#serach').val();
+console.log(page);
+console.log(query);
+fetch_data(page,query);
+
+//  var str = '/pagination/fetch_data?page=3'
+//   var array = str.split("page=")[0];
+//   console.log(array); 
+});
+
+////////////filter
+function fetch2_data(page,query)
+{
+$.ajax({
+ url:"/pagination/fetch2_data?page="+page+"&query="+query,
+ success:function(data)
+ {
+  // console.log(data);
+  $('tbody').html('');
+  $('tbody').html(data);
+ }
+})
+}
+
+$(document).on('change', '#filter', function(){
+var query = $('#filter').val();
+var page = $('#hidden_page').val();
+fetch2_data(page,query);
+});
+
+var query = $('#filter').val();
+if(query!=''){
+    $(document).on('click', '.pagination a', function(event){
+event.preventDefault();
+var page = $(this).attr('href').split('page=')[1];
+$('#hidden_page').val(page);
+var query = $('#filter').val();
+console.log(page);
+console.log(query);
+fetch2_data(page,query);
+
+//  var str = '/pagination/fetch_data?page=3'
+//   var array = str.split("page=")[0];
+//   console.log(array); 
+});
+}
+
+
+});
+</script>
 @endsection

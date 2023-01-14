@@ -28,8 +28,9 @@ route::get('/searchtache',[PreparationTacheController::class,'search_tache'])->n
 route::get('/generatepdf',[PreparationTacheController::class,'generatepdf'])->name('generate');
 
 Route::resource('apprenant', ApprenantController::class);
-route::get('/filter_group',[ApprenantController::class,'filter_group'])->name('filter_group');
-route::get('/searchapprenant',[ApprenantController::class,'search_apprenant'])->name('searchapprenant');
+route::get('/pagination/fetch2_data',[ApprenantController::class,'fetch2_data'])->name('/pagination/fetch2_data');
+// route::get('/searchapprenant',[ApprenantController::class,'search_apprenant'])->name('searchapprenant');
+Route::get('/pagination/fetch_data', [ApprenantController::class,'fetch_data'])->name('/pagination/fetch_data');
 
 Route::get('exportexcelapprenant',[ApprenantController::class,'exportexcel'])->name('exportexcelapprenant');
 Route::post('importexcelapprenant',[ApprenantController::class,'importexcel'])->name('importexcelapprenant');

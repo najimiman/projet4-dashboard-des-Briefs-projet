@@ -23,31 +23,66 @@ class ApprenantController extends Controller
     public function index()
     {
         $groupes=Groupes::all();
-        $apprenant =Apprenant::paginate(3);
-        // dd($tasks);
-        return view('apprenants.index',['groupes'=>$groupes,'apprenant'=>$apprenant]);
+        $apprenant =Apprenant::paginate(2);
+        return view('apprenants.index',['groupes'=>$groupes,'data'=>$apprenant]);
     }
-    public function filter_group(Request $request){
-        if($request->has('filter') && !empty($request->filter)){
-            $apprenants = DB::table('Apprenant')
+    // public function filter_group(Request $request){
+    //     if($request->has('filter') && !empty($request->filter)){
+    //         $apprenants = DB::table('Apprenant')
+    //         ->select("*" )
+    //             ->join('groupes_apprenant', 'Apprenant.id', '=', 'groupes_apprenant.Apprenant_id')
+    //             ->join('Groupes', 'groupes_apprenant.Groupe_id', '=', 'Groupes.id')
+    //             ->where('Groupes.id','Like','%'.$request->filter.'%')
+    //             ->get();
+    //             return response(['dataapprenants'=>$apprenants]); 
+    //     }
+    //     else{
+    //         $apprenants=Apprenant::all();
+    //         return response(['dataapprenants'=>$apprenants]);
+    //         dd($apprenants);
+    //     }
+            
+    // }
+    // public function search_apprenant(Request $request){
+    //     $searchapprenat=Apprenant::where('Nom','Like','%'.$request->searchapprenant.'%')->get();
+    //     return response(['searchapprenat'=>$searchapprenat]);
+
+    // }
+
+    function fetch_data(Request $request)
+    {
+     if($request->ajax())
+     {
+        $query = $request->get('query');
+      $data = DB::table('apprenant')
+                    ->where('Nom', 'like', '%'.$query.'%')
+                    // ->orWhere('Nom_tache', 'like', '%'.$query.'%')
+                    ->paginate(2);
+                    // dd($data);
+      return view('apprenants.apprenant_data', compact('data'))->render();
+     }
+    }
+
+    function fetch2_data(Request $request)
+    {
+     if($request->ajax())
+     {
+        if($request->has('query') && !empty($request->get('query'))){
+        $query = $request->get('query');
+      $data = DB::table('apprenant')
             ->select("*" )
-                ->join('groupes_apprenant', 'Apprenant.id', '=', 'groupes_apprenant.Apprenant_id')
+                ->join('groupes_apprenant', 'apprenant.id', '=', 'groupes_apprenant.Apprenant_id')
                 ->join('Groupes', 'groupes_apprenant.Groupe_id', '=', 'Groupes.id')
-                ->where('Groupes.id','Like','%'.$request->filter.'%')
-                ->get();
-                return response(['dataapprenants'=>$apprenants]); 
+                ->where('Groupes.id','Like','%'.$query.'%')
+                ->paginate(2);
+                // dd($data);
+                return view('apprenants.apprenant_data', compact('data'))->render();
         }
         else{
-            $apprenants=Apprenant::all();
-            return response(['dataapprenants'=>$apprenants]);
-            dd($apprenants);
+            $data =Apprenant::paginate(2);
+        return view('apprenants.apprenant_data', compact('data'))->render();
         }
-            
-    }
-    public function search_apprenant(Request $request){
-        $searchapprenat=Apprenant::where('Nom','Like','%'.$request->searchapprenant.'%')->get();
-        return response(['searchapprenat'=>$searchapprenat]);
-
+     }
     }
     /**
      * Show the form for creating a new resource.
